@@ -2,11 +2,12 @@ import unicodecsv
 from datetime import datetime as dt
 from operator import itemgetter
 
+# Open csv file and read data into a list of dictionaries
 with open('budget_data.csv', 'rb') as f:
 	reader = unicodecsv.DictReader(f)
 	budget_data = list(reader)
 
-# Add sortable date column
+# Add a Sortable_date to each dictionary
 for row in budget_data:
     date =  row['Date']
     new_date = dt.strptime(date, '%b-%Y').strftime('%Y/%m')
@@ -15,7 +16,7 @@ for row in budget_data:
 # Sort by Sortable_date key
 sorted_budget_data = sorted(budget_data, key=itemgetter('Sortable_date')) 
 
-# Print to terminal
+# Print to terminal our message header
 print("Financial Analysis")
 print("----------------------------")
 
@@ -28,14 +29,14 @@ for row in sorted_budget_data:
         num_months += 1
 print(f"Total Months: {num_months}")
 
-# Find and total net amount of "Profit/Losses" over the entire period
+# Find, total, and print net amount of "Profit/Losses" over the entire period
 net = 0
 for row in budget_data:
     net += int(row['Profit/Losses'])
 print(f"Total: ${net}")
 
 # Calculate and print the average change in "Profit/Losses" between months
-# over the entire period
+#    over the entire period
 sum_changes = 0
 previous_value = int(budget_data[0]['Profit/Losses'])
 for row in budget_data:
@@ -45,26 +46,24 @@ for row in budget_data:
 avg_change = sum_changes/(len(budget_data) -1)
 print("Average  Change: ${:.2f}".format(avg_change))
 
-# Find and print the greatest increase in profits (date and amount) over the entire period
+# Find and print the greatest increase and decrease in profits (date and amount) 
+#   over the entire period
 max_incr_value = 0
 max_incr_date = ""
+max_decr_value = 0
+max_decr_date = ""
 for row in budget_data:
     if int(row['Change']) > max_incr_value:
         max_incr_value = int(row['Change'])
         max_incr_date = row['Date']
-
-print(f"Greatest Increase in Profits: {max_incr_date} (${max_incr_value})")
-
-# Find and print the greatest decrease in losses (date and amount) over the entire period
-max_decr_value = 0
-max_decr_date = ""
-for row in budget_data:
     if int(row['Change']) < max_decr_value:
         max_decr_value = int(row['Change'])
         max_decr_date = row['Date']
 
+print(f"Greatest Increase in Profits: {max_incr_date} (${max_incr_value})")
 print(f"Greatest Decrease in Profits: {max_decr_date} (${max_decr_value})")
 
+# Write out results to Output.txt
 with open("Output.txt", "w") as text_file:
     text_file.write("Financial Analysis\n")
     text_file.write("----------------------------\n")
