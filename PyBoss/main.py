@@ -1,18 +1,19 @@
 import unicodecsv
+from datetime import datetime as dt
+import us_state_abbrev
+
+# Open csv file and read data into a list of dictionaries
 with open('employee_data.csv', 'rb') as f:
     reader = unicodecsv.DictReader(f)
     employee_data = list(reader)
 
-# Reformat employee data
-from datetime import datetime as dt
-import us_state_abbrev
-    
+# Reformat employee data    
 for row in employee_data:
     
     # Split name to first and last
     first_name, last_name = row['Name'].split(" ")
     
-    # Rename 'Name' key to 'First Name' and assign value
+    # Rename 'Name' key to 'First Name' and replace full name with first name
     row['First Name'] = row.pop('Name')
     row['First Name'] = first_name
     
@@ -32,12 +33,11 @@ for row in employee_data:
     old_state = row['State']
     row['State'] = us_state_abbrev.us_state_abbrev[old_state]
 
-# Export to Output.csv file
+# Write out to a Output.csv file
 import csv
 with open('Output.csv', 'w') as csvfile:
     #fieldnames = list(employee_data[0].keys())
     fieldnames = ['Emp ID', 'First Name', 'Last Name', 'DOB', 'SSN', 'State']
-    list(employee_data[0].keys())
     writer = csv.DictWriter(csvfile, fieldnames= fieldnames)
     writer.writeheader()
     writer.writerows(employee_data)
