@@ -28,11 +28,11 @@ for row in sorted_budget_data:
         num_months += 1
 print(f"Total Months: {num_months}")
 
-# Find and total total net amount of "Profit/Losses" over the entire period
-sum = 0
+# Find and total net amount of "Profit/Losses" over the entire period
+net = 0
 for row in budget_data:
-    sum += int(row['Profit/Losses'])
-print(f"Total: ${sum}")
+    net += int(row['Profit/Losses'])
+print(f"Total: ${net}")
 
 # Calculate and print the average change in "Profit/Losses" between months
 # over the entire period
@@ -69,7 +69,7 @@ with open("Output.txt", "w") as text_file:
     text_file.write("Financial Analysis\n")
     text_file.write("----------------------------\n")
     text_file.write(f"Total Months: {num_months}\n")
-    text_file.write(f"Total: ${sum}\n")
+    text_file.write(f"Total: ${net}\n")
     text_file.write("Average  Change: ${:.2f}\n".format(avg_change))
     text_file.write(f"Greatest Increase in Profits: {max_incr_date} (${max_incr_value})\n")
     text_file.write(f"Greatest Decrease in Profits: {max_decr_date} (${max_decr_value})\n")
