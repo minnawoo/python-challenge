@@ -1,43 +1,51 @@
 import re
 
+# Function for analyzing a paragraph
 def AnalyzeParagraph(filename):
     
-    # Fetch paragraph from text file
-    input = []
+    # Fetch paragraph from text file and read to text list
+    text = []
     with open(filename, 'r') as f:
         for line in f:
-            if not line.strip(): continue # skip the empty line
-            input.append(line.strip())
+            # line.strip() returns false if empty
+            if line.strip() == False: continue # skip the empty line
+            text.append(line.strip())
 
-    # Split into a list of sentences 
+    # Split text into a list of sentences 
     sentence_list = []
-    for line in input:
+    for line in text:
+
+        # Look before spaces for punctuation and split on both punctuation and spaces
+        #   [^A-Z] ensures that abbreviated names are not split on (Anne V. Coates)
         sentences = re.split("(?<=[^A-Z][.!?]) +", line)
         for sentence in sentences:
             
             # Add each sentence to sentence_list
             sentence_list.append(sentence)
             
-            #print(sentence + "\n") # test
+            # Debug
+            #print(sentence + "\n")
     
     num_sentences = len(sentence_list)
         
-    # Initialize variables
+    # Initialize variables to enter for-loop (to count number of words)
     words = []
     sum_sentence_len = 0
     sum_word_len = 0
     
+    ############################
     # Loop through each sentence
+    ############################
     for sentence in sentence_list:
         
         # Split the sentence into a list of words
-        split_sentence = sentence.split(" ")
+        word_list = sentence.split(" ")
         
-        # Add the sentence length to a summing variable
-        sum_sentence_len += len(split_sentence)
+        # Add the sentence length to a sum
+        sum_sentence_len += len(word_list)
             
-        # Split each sentence and compile into the words list
-        for word in split_sentence:
+        # Split each sentence into words
+        for word in word_list:
             
             # Append each word to the words list
             words.append(word)
@@ -45,9 +53,9 @@ def AnalyzeParagraph(filename):
             # Add the word length to a summing variable
             sum_word_len += len(word)
         
-    avg_sentence_length = round(sum_sentence_len/num_sentences, 1)
     num_words = len(words)
     avg_word_length = round(sum_word_len/num_words, 1)
+    avg_sentence_length = round(sum_sentence_len/num_sentences, 1)
     
     # Print analysis results
     print("Paragraph Analysis")
@@ -60,5 +68,9 @@ def AnalyzeParagraph(filename):
 ######################################################################
 #                      Change the filename below                     #
 ######################################################################
+AnalyzeParagraph('example.txt')
+print()
 AnalyzeParagraph('paragraph_1.txt')
+print()
+AnalyzeParagraph('paragraph_2.txt')
 
