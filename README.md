@@ -1,5 +1,5 @@
 # python-challenge
-UofT SCS Data Analytics Bootcamp's Unit 3 to Unit 5 Assignments (Pandas, Numpy, Matplotlib) in Python (.py) files and Jupyter Notebook (.ipynb) files. Below are some plots using Python language from the assignments:
+UofT SCS Data Analytics Bootcamp's Unit 3 to Unit 5 Assignments (Pandas, Numpy, Matplotlib) in Python (.py) files and Jupyter Notebook (.ipynb) files. Below are some plots generated using Python language from the assignments:
 
 ![Bubble Plot of Ride Sharing Data](PyberPlots/Bubble%20Plot%20of%20Ride%20Sharing%20Data.png)
 ![Metastatic Spread During Treatment](Pymaceuticals/Metastatic%20Spread%20During%20Treatment.png)
